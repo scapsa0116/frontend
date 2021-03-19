@@ -6,7 +6,7 @@ import IndividualPicture from '../container/IndividualPicture'
      console.log(pictures)
 return(
     <ul>
-    {pictures.map(picture => <li><IndividualPicture key = {picture.id} picture = {picture}/></li>)}
+    {pictures.map(picture => <IndividualPicture  picture = {picture} key = {picture.id}/>)}
     </ul>
 )
 }

@@ -1,15 +1,21 @@
 import React from 'react'
+// import IndividualPicture from './container/IndividualPicture.js'
 // import { connect } from 'react-redux'
 // import {fetchPictures} from './actions/fetchPictures'
+import SignUp from './container/SignUp.js'
+import LogIn from './container/LogIn.js'
 import PicturesContainer from './container/PicturesContainer'
+import OnePicture from './container/OnePicture.js'
 import ProfileContainer from './container/ProfileContainer.js'
 import {
     BrowserRouter as Router,
     Switch,
     Route,
     NavLink
+   
   } from "react-router-dom";
 class App extends React.Component {
+
 
 
     // componentDidMount(){
@@ -33,8 +39,8 @@ render(){
      </div>
      <div className="space-x-4">
     <NavLink to="/login">
-      <button className="inline-block bg-blue-500 px-2 py-1 text-white font-semibold 
-                           text-sm rounded" href="#">Log In</button>
+      <button className="inline-block bg-blue-500 px-2 py-1 text-white font-semibold text-sm rounded" href="#">
+      Log In</button>
     </NavLink>
     <NavLink to="/signup">
       <button className="inline-block text-blue-500 font-semibold text-sm" href="#">Sign Up</button>
@@ -49,6 +55,15 @@ render(){
               </Route>
               <Route exact path="/profile/user">
                   <ProfileContainer/>
+              </Route>
+              <Route exact path='/pictures/:pictureId' component={OnePicture}>
+                {/* <OnePicture /> */}
+              </Route>
+              <Route path="/login">
+              <LogIn/>
+              </Route>
+              <Route path="/signup">
+              <SignUp/>
               </Route>
           </Switch>
       </Router>

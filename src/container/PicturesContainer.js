@@ -21,7 +21,6 @@ componentDidMount(){
         })
         .then(res => res.json())
         .then(pictures =>  {
-        console.log('pictures', pictures)
         this.setState({
             pictures: pictures,
             loading: false

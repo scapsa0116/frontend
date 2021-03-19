@@ -1,8 +1,12 @@
 import React from 'react';
-import PostContainer from '../container/PostContainer.js'
-import {  Link } from "react-router-dom";
+// import PostContainer from '../container/PostContainer.js'
 
+import { Link } from 'react-router-dom'
 const IndividualPicture = ({picture}) => {
+
+    
+    
+    
     return (
           
     <li key={picture.id}>
@@ -15,11 +19,12 @@ const IndividualPicture = ({picture}) => {
     </div>
     <span className="pt-1 ml-2 font-bold text-sm">{picture.user_name}</span>
     </div>
-    <span className="px-2 hover:bg-gray-300 cursor-pointer rounded"><i class="fas fa-ellipsis-h pt-2 text-lg"></i></span>
+    <span className="px-2 hover:bg-gray-300 cursor-pointer rounded"><i className="fas fa-ellipsis-h pt-2 text-lg"></i></span>
      </div> 
-     <Link to={`/pictures${picture.id}`} >
-     <img className="w-full bg-cover" src={picture.image_url} />
+     <Link to={`/pictures/${picture.id}`}>
+     <img className="w-full bg-cover" src={picture.image_url} alt="" />
      </Link>
+     
      <div className="px-3 pb-2">
      <div className="pt-2">
      <i className="far fa-heart cursor-pointer"></i>
