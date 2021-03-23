@@ -2,7 +2,7 @@ import React from 'react';
 // import PostContainer from '../container/PostContainer.js'
 import { Link } from 'react-router-dom'
 
-const IndividualPicture = ({picture, user}) => {
+const IndividualPicture = ({picture}) => {
 
   
     return (
