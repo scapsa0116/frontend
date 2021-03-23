@@ -1,23 +1,24 @@
 import React from 'react';
 // import PostContainer from '../container/PostContainer.js'
-
 import { Link } from 'react-router-dom'
-const IndividualPicture = ({picture}) => {
 
-    
-    
-    
+const IndividualPicture = ({picture, user}) => {
+
+  
     return (
           
     <li key={picture.id}>
-    <div className=" rounded overflow-hidden border w-full lg:w-6/12 md:w-6/12 bg-white mx-3 md:mx-0 lg:mx-0">
+    <div className=" rounded overflow-hidden border w-full lg:w-6/12   md:w-6/12 bg-white mx-3 md:mx-0 lg:mx-0">
     <div className="w-full flex justify-between p-3">
     <div className="flex">
     <div className="rounded-full h-8 w-8 bg-gray-500 flex items-center justify-center overflow-hidden">
     <img src={picture.image_url} alt="profilepic"/>
 
     </div>
+    <Link to={`/users/${picture.user_id}`}>
     <span className="pt-1 ml-2 font-bold text-sm">{picture.user_name}</span>
+    </Link>
+
     </div>
     <span className="px-2 hover:bg-gray-300 cursor-pointer rounded"><i className="fas fa-ellipsis-h pt-2 text-lg"></i></span>
      </div> 
