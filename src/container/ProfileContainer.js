@@ -136,7 +136,7 @@ class ProfileContainer extends React.Component {
 </div>
 <div className="px-px md:px-3">
 <ul className="flex items-center justify-around md:justify-center space-x-12  uppercase tracking-widest font-semibold text-xs text-gray-600 border-t">
-<Link to={`/users/${this.state.userId}/pictures/new`}  className="inline-block p-3">
+<Link to={`/pictures/new/create`}  className="inline-block p-3">
 <li className="md:border-t md:border-gray-700 md:-mt-px md:text-gray-700">
 <i className="fas fa-th-large text-xl md:text-xs"></i>
 <span className="hidden md:inline">post</span>

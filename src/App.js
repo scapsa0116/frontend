@@ -10,6 +10,7 @@ import OnePicture from './container/OnePicture.js'
 import Terms from './terms/terms.js'
 import ProfileContainer from './container/ProfileContainer.js'
 import NewPicture from './newPictures/NewPicture.js'
+import Home from './container/Home'
 import {
     BrowserRouter as Router,
     Switch,
@@ -20,16 +21,128 @@ import {
   } from "react-router-dom";
 class App extends React.Component {
 
+  constructor(){
+    super()
+    this.state = {
+        currentUser: null,
+        loginForm: {
+          name: "",
+          email: "",
+          password: ""
+        },
+        pictures: []
+    }
+}
 
 
-    // componentDidMount(){
-    //     this.props.fetchPictures()
-    // }
+
+handleLoginFormChange = (event) => {
+const {name, value } = event.target
+this.setState({
+  loginForm: {
+    ...this.state.loginForm,
+    [name]: value
+  }
+})
+}
+
+handleLoginFormSubmit = event => {
+  event.preventDefault()
+
+  const userInfo = this.state.loginForm
+
+  const headers = {
+    method: 'POST',
+    headers: {
+      "content-type": "application/json"
+    },
+    body: JSON.stringify({
+      user: userInfo
+    })
+  }
+  
+
+  fetch("http://localhost:3000/login", headers )
+  .then(res => res.json())
+  .then(userJson =>{
+    if (userJson.error) {
+      alert("Invalid credentials")
+
+    }else{
+      this.setState({
+        currentUser: userJson.user
+      })
+    }
+})
+  .catch(console.log)
+  
+}
+
+getPictures = () => {
+  const token = localStorage.getItem("token")
+  fetch("http://localhost:3000/pictures",{
+    headers:{
+      "Authorization": token
+    }
+  })
+  .then(resp => resp.json())
+  .then(pictures => {
+    if(pictures.error){
+      alert("Not autorized")
+    }else {
+      this.setState({
+        pictures
+      })
+    }
+  })
+}
+
+
+
+
+
+componentDidMount(){
+const token = localStorage.getItem("token")
+if (token) {
+  fetch("http://localhost:3000/get_current_user", {
+    headers: {
+      "Authorization": token
+    }
+  })
+  .then(res => res.json())
+  .then(resp => {
+    if (resp.error) {
+     alert(resp.error)
+    }else{
+     this.setState({
+       currentUser: resp.user
+     })
+    }
+  })
+  .catch(console.log)
+}
+
+}
+
+
+
+
+
 
 render(){
   console.log("Im here")
+  const {currentUser} = this.state
   return (
     <div>
+      <h2>
+        {currentUser ? `:Logged in as ${currentUser.name}` : 
+        "Not Loged In"
+         }
+      </h2>
+
+      <button onClick={this.getPictures}>Show user Pictures</button>
+      <Home pictures = {this.state.pictures}/>
+   
     <Router>
      <nav className="border-b px-4 py-2 bg-white">
      <div className="flex flex-wrap items-center justify-between md:justify-around">
@@ -61,6 +174,9 @@ render(){
               <Route exact path="/">
                   <PicturesContainer/>
               </Route>
+              {/* <Route exact path="/home">
+            
+              </Route> */}
               
               <Route exact path="/users/:userId" component={ProfileContainer}>
               </Route>
@@ -70,7 +186,13 @@ render(){
                 {/* <OnePicture /> */}
               </Route>
               <Route path="/login">
-              <LogIn/>
+              <LogIn
+              handleLoginFormChange={this.handleLoginFormChange}
+              handleLoginFormSubmit={this.handleLoginFormSubmit}
+              name = {this.state.loginForm.name}
+              email = {this.state.loginForm.email}
+              password = {this.state.loginForm.password}
+              />
               </Route>
               <Route path="/signup">
               <SignUp/>
@@ -78,13 +200,13 @@ render(){
               <Route path ="/terms">
                 <Terms/>
               </Route>
-              <Route exact path="/users/:userId/pictures/new" component={NewPicture} >
-                {/* <NewPicture/> */}
+              <Route exact path="/pictures/new/create">
+                <NewPicture/>
               </Route>
           </Switch>
       </Router>
 
-      
+
       </div>
   )
 }
