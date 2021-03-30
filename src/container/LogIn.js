@@ -5,9 +5,6 @@ import React from 'react';
 const LogIn =({handleLoginFormChange, handleLoginFormSubmit, name, email, password}) => {
 
     
-
-
-    
         return(
            
             <div className="bg-grey-lighter min-h-screen flex flex-col">

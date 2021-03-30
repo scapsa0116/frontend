@@ -11,6 +11,8 @@ import Terms from './terms/terms.js'
 import ProfileContainer from './container/ProfileContainer.js'
 import NewPicture from './newPictures/NewPicture.js'
 import Home from './container/Home'
+import Logout from './container/Logout'
+
 import {
     BrowserRouter as Router,
     Switch,
@@ -34,7 +36,29 @@ class App extends React.Component {
     }
 }
 
-
+componentDidMount(){
+  const token = localStorage.getItem("token")
+  if (token) {
+    fetch("http://localhost:3000/get_current_user", {
+      headers: {
+        "Authorization": token
+      }
+    })
+    .then(res => res.json())
+    .then(resp => {
+      if (resp.error) {
+       alert(resp.error)
+      }else{
+       this.setState({
+         currentUser: resp.user
+       })
+      }
+    })
+    .catch(console.log)
+  }
+  
+  }
+  
 
 handleLoginFormChange = (event) => {
 const {name, value } = event.target
@@ -64,25 +88,40 @@ handleLoginFormSubmit = event => {
 
   fetch("http://localhost:3000/login", headers )
   .then(res => res.json())
-  .then(userJson =>{
-    if (userJson.error) {
+  .then(resp =>{
+    if (resp.error) {
       alert("Invalid credentials")
 
     }else{
       this.setState({
-        currentUser: userJson.user
+        currentUser: resp.user,
+        loginForm: {
+          name: "",
+          email: "",
+          password: ""
+        }
       })
+      localStorage.setItem('token',resp.jwt)
     }
 })
   .catch(console.log)
   
 }
 
+logout=(event) => {
+  event.preventDefault()
+  localStorage.removeItem("token")
+  this.setState({
+    currentUser: null,
+    pictures: []
+  })
+}
+
 getPictures = () => {
   const token = localStorage.getItem("token")
   fetch("http://localhost:3000/pictures",{
     headers:{
-      "Authorization": token
+      "Authorization":token
     }
   })
   .then(resp => resp.json())
@@ -101,28 +140,6 @@ getPictures = () => {
 
 
 
-componentDidMount(){
-const token = localStorage.getItem("token")
-if (token) {
-  fetch("http://localhost:3000/get_current_user", {
-    headers: {
-      "Authorization": token
-    }
-  })
-  .then(res => res.json())
-  .then(resp => {
-    if (resp.error) {
-     alert(resp.error)
-    }else{
-     this.setState({
-       currentUser: resp.user
-     })
-    }
-  })
-  .catch(console.log)
-}
-
-}
 
 
 
@@ -140,9 +157,11 @@ render(){
          }
       </h2>
 
-      <button onClick={this.getPictures}>Show user Pictures</button>
-      <Home pictures = {this.state.pictures}/>
    
+
+
+
+
     <Router>
      <nav className="border-b px-4 py-2 bg-white">
      <div className="flex flex-wrap items-center justify-between md:justify-around">
@@ -157,12 +176,18 @@ render(){
      
      
      <div className="space-x-4">
+       <NavLink to="/home">
+       <button onClick={this.getPictures}>Show user Pictures</button>
+       </NavLink>
     <NavLink to="/login">
       <button className="inline-block bg-blue-500 px-2 py-1 text-white font-semibold text-sm rounded" href="#">
       Log In</button>
     </NavLink>
     <NavLink to="/signup">
       <button className="inline-block text-blue-500 font-semibold text-sm" href="#">Sign Up</button>
+    </NavLink>
+    <NavLink to="/logout">
+    <button className="inline-block bg-blue-500 px-2 py-1 text-white font-semibold text-sm rounded" href="#"> Log Out</button>
     </NavLink>
     </div> 
      </div>
@@ -174,9 +199,12 @@ render(){
               <Route exact path="/">
                   <PicturesContainer/>
               </Route>
-              {/* <Route exact path="/home">
-            
-              </Route> */}
+              <Route exact path="/logout">
+               <Logout logout={this.logout}/>
+              </Route>
+              <Route path="/home">
+              <Home pictures = {this.state.pictures}/>
+              </Route>
               
               <Route exact path="/users/:userId" component={ProfileContainer}>
               </Route>
