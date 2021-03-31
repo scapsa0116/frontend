@@ -177,7 +177,7 @@ render(){
      
      <div className="space-x-4">
        <NavLink to="/home">
-       <button onClick={this.getPictures}>Show user Pictures</button>
+       <button onClick={this.getPictures} className="inline-block bg-blue-500 px-2 py-1 text-white font-semibold text-sm rounded" href="#">Show user Pictures</button>
        </NavLink>
     <NavLink to="/login">
       <button className="inline-block bg-blue-500 px-2 py-1 text-white font-semibold text-sm rounded" href="#">
@@ -203,7 +203,8 @@ render(){
                <Logout logout={this.logout}/>
               </Route>
               <Route path="/home">
-              <Home pictures = {this.state.pictures}/>
+              <Home pictures = {this.state.pictures}
+                    currentUser= {this.state}/>
               </Route>
               
               <Route exact path="/users/:userId" component={ProfileContainer}>
