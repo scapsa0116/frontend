@@ -1,7 +1,4 @@
 import React from 'react'
-// import IndividualPicture from './container/IndividualPicture.js'
-// import { connect } from 'react-redux'
-// import {fetchPictures} from './actions/fetchPictures'
 import FetchUsersContainer from './container/FetchUsersContainer.js'
 import SignUp from './container/SignUp.js'
 import LogIn from './container/LogIn.js'
@@ -12,21 +9,14 @@ import ProfileContainer from './container/ProfileContainer.js'
 import NewPicture from './newPictures/NewPicture.js'
 import Home from './container/Home'
 import Logout from './container/Logout'
-
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    NavLink,
-    
-   
-  } from "react-router-dom";
+import {BrowserRouter as Router, Switch, Route, NavLink} from "react-router-dom";
+import {connect} from 'react-redux'
+import { getCurrentUser } from './actions/currentUser.js'
 class App extends React.Component {
 
   constructor(){
     super()
     this.state = {
-        currentUser: null,
         loginForm: {
           name: "",
           email: "",
@@ -37,26 +27,7 @@ class App extends React.Component {
 }
 
 componentDidMount(){
-  const token = localStorage.getItem("token")
-  if (token) {
-    fetch("http://localhost:3000/get_current_user", {
-      headers: {
-        "Authorization": token
-      }
-    })
-    .then(res => res.json())
-    .then(resp => {
-      if (resp.error) {
-       alert(resp.error)
-      }else{
-       this.setState({
-         currentUser: resp.user
-       })
-      }
-    })
-    .catch(console.log)
-  }
-  
+  this.props.getCurrentUser()
   }
   
 
@@ -77,6 +48,7 @@ handleLoginFormSubmit = event => {
 
   const headers = {
     method: 'POST',
+    credentials: "include",
     headers: {
       "content-type": "application/json"
     },
@@ -101,7 +73,6 @@ handleLoginFormSubmit = event => {
           password: ""
         }
       })
-      localStorage.setItem('token',resp.jwt)
     }
 })
   .catch(console.log)
@@ -110,7 +81,15 @@ handleLoginFormSubmit = event => {
 
 logout=(event) => {
   event.preventDefault()
-  localStorage.removeItem("token")
+  fetch("http://localhost:3000/logout",{
+    credentials: "include",
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json"
+    }
+  })
+  .then(r => r.json())
+  .then(resp => alert(resp.message))
   this.setState({
     currentUser: null,
     pictures: []
@@ -118,10 +97,11 @@ logout=(event) => {
 }
 
 getPictures = () => {
-  const token = localStorage.getItem("token")
-  fetch("http://localhost:3000/pictures",{
+  // const token = localStorage.getItem("token")
+  fetch("http://localhost:3000/home",{
+    credentials: "include",
     headers:{
-      "Authorization":token
+     "Content-Type": "application/json"
     }
   })
   .then(resp => resp.json())
@@ -147,14 +127,11 @@ getPictures = () => {
 
 
 render(){
-  console.log("Im here")
-  const {currentUser} = this.state
+  const {currentUser} = this.props
   return (
     <div>
       <h2>
-        {currentUser ? `:Logged in as ${currentUser.name}` : 
-        "Not Loged In"
-         }
+        {currentUser ? `:Logged in as ${currentUser.name}` : "Not Loged In"}
       </h2>
 
    
@@ -173,10 +150,9 @@ render(){
             text-center outline-none focus:border-gray-400" type="search" placeholder="Search"/> 
      <i className="fa fa-search absolute top-0 left-0 ml-12 mt-1"></i>      
      </div>
-     
-     
      <div className="space-x-4">
        <NavLink to="/home">
+
        <button onClick={this.getPictures} className="inline-block bg-blue-500 px-2 py-1 text-white font-semibold text-sm rounded" href="#">Show user Pictures</button>
        </NavLink>
     <NavLink to="/login">
@@ -199,55 +175,61 @@ render(){
               <Route exact path="/">
                   <PicturesContainer/>
               </Route>
+
               <Route exact path="/logout">
-               <Logout logout={this.logout}/>
+                  <Logout logout={this.logout}/>
               </Route>
+
               <Route path="/home">
-              <Home pictures = {this.state.pictures}
-                    currentUser= {this.state}/>
+                  <Home pictures = {this.state.pictures}
+                        currentUser= {this.state}/>
               </Route>
               
               <Route exact path="/users/:userId" component={ProfileContainer}>
               </Route>
+
               <Route exact path="/users/:userid" component={FetchUsersContainer}>
               </Route>
+
               <Route exact path='/pictures/:pictureId' component={OnePicture}>
-                {/* <OnePicture /> */}
               </Route>
+
               <Route path="/login">
-              <LogIn
-              handleLoginFormChange={this.handleLoginFormChange}
-              handleLoginFormSubmit={this.handleLoginFormSubmit}
-              name = {this.state.loginForm.name}
-              email = {this.state.loginForm.email}
-              password = {this.state.loginForm.password}
-              />
+                  <LogIn
+                  handleLoginFormChange={this.handleLoginFormChange}
+                  handleLoginFormSubmit={this.handleLoginFormSubmit}
+                  name = {this.state.loginForm.name}
+                  email = {this.state.loginForm.email}
+                  password = {this.state.loginForm.password}
+                  />
               </Route>
+
               <Route path="/signup">
-              <SignUp/>
+                 <SignUp/>
               </Route>
+
               <Route path ="/terms">
-                <Terms/>
+                  <Terms/>
               </Route>
+
               <Route exact path="/pictures/new/create">
                 <NewPicture/>
               </Route>
+              
           </Switch>
       </Router>
-
-
       </div>
   )
 }
   
 }
 
-// const mapStateToProps = (state) => {
-//   return {
-//       pictures: state.pictures
-//   } 
-// }
+const mapStateToProps = (state) => {
+  return {
+      currentUser: state.currentUser
+  } 
+}
 
-export default App;
+export default  connect(mapStateToProps, {getCurrentUser: getCurrentUser})(App);
 
 

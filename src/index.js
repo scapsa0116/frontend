@@ -1,17 +1,29 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import{ createStore, applyMiddleware, compose} from 'redux';
+import App from './App.js';
+
+import{ createStore, applyMiddleware, compose, combineReducers} from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux'
+// import picturesReducer from './reducers/picturesReducer.js'
 
-import App from './App.js';
-import picturesReducer from './reducers/picturesReducer.js'
+const currentUserReducer = (state = null, action) => {
+  switch (action.type) {
+    case "SET_CURRENT_USER":
+      return action.user
+    default:
+      return state
+  }
+}
 
 
+const rootReducer = combineReducers({
+  currentUser: currentUserReducer
+})
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-let store = createStore(picturesReducer, composeEnhancers(applyMiddleware(thunk)))
+let store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)))
 
 
 
