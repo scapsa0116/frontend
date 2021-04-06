@@ -10,44 +10,42 @@ state = {
 
 handleSubmit = (e) => {
     e.preventDefault();
-//     // // const form = e.target
-    // const body = new FormData()
-//     // body.append('picture[image_url]', form.image_url.value)
-//     // body.append('picture[description]', form.description.value)
-
-
+    const form = e.target
+    const body = new FormData()
+    body.append('picture[image]', form.image.files[0], form.image.value)
+    body.append('picture[description]', form.description.value)
 
 
     fetch(`http://localhost:3000/pictures`,{
+        credentials: "include",
         method: 'POST',
-        headers:{
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({picture: this.state})
+        
+        body: body
     })
     .then(res => res.json())
     .then(pictureJson => {
-        debugger
+    //    this.props.history.push('/')
+    console.log(pictureJson)
     })
     
    
 }
 
 
-handleChange = (e) => {
-    this.setState({
-    [e.target.image_url]: e.target.value,
+// handleChange = (e) => {
+//     this.setState({
+//     [e.target.image_url]: e.target.value,
        
-    })
-}
+//     })
+// }
 
 
-handleDescription = (e) => {
-    this.setState({
-    [e.target.description]: e.target.value 
-    })
-}
+
+// handleDescription = (e) => {
+//     this.setState({
+//     [e.target.description]: e.target.value 
+//     })
+// }
 
 
 
@@ -58,18 +56,17 @@ handleDescription = (e) => {
                 <h1 className="text-center text-3xl font-semibold mb-2">New Post</h1>
                 <fieldset>
                     <input type="file"
-                    image_url="image_url"
-                    id="image_url"
+                    name="image"
+                    accept="image/*"
+                    image_url="image"
+                    id="image"
                     className='w-full border p-4 my-4 file-uploader'
-                    onChange={this.handleChange.bind(this)}
-                    value = {this.state.image_url}
                     />
 
                     <input
                     type='text' 
+                    name="description"
                     description='description'
-                    onChange={this.handleDescription.bind(this)}
-                    value = {this.state.description}
                     id='description'
                     placeholder="whats on your mind?"
                     className='w-full border p-4 my-4'/>

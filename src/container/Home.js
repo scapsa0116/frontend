@@ -2,6 +2,7 @@ import React from 'react'
 
 
 
+
 const Home = ({pictures, currentUser}) => {
     
 
@@ -13,8 +14,6 @@ const Home = ({pictures, currentUser}) => {
        
        
         <div className="bg-gray-100 bg-opacity-25" >
-           
-
         <div className="lg:w-8/12 lg:mx-auto mb-8">
         <header className="flex flex-wrap items-center p-4 md:py-8">
         <div className="md:w-3/12 md:ml-16">
@@ -42,7 +41,9 @@ const Home = ({pictures, currentUser}) => {
 
 
         <ul className="hidden md:flex space-x-8 mb-4">
+          
           <li>
+            
             <span className="font-semibold">136</span>
             posts
           </li>
@@ -70,13 +71,11 @@ const Home = ({pictures, currentUser}) => {
 
     <div className="px-px md:px-3">
 
-  <ul className="flex md:hidden justify-around space-x-8 border-t 
-          text-center p-2 text-gray-600 leading-snug text-sm">
+  <ul className="flex md:hidden justify-around space-x-8 border-t text-center p-2 text-gray-600 leading-snug text-sm">
   <li>
     <span className="font-semibold text-gray-800 block">136</span>
     posts
   </li>
-
   <li>
     <span className="font-semibold text-gray-800 block">40.5k</span>
     followers
@@ -111,10 +110,12 @@ const Home = ({pictures, currentUser}) => {
 <div className="px-px md:px-3">
 <ul className="flex items-center justify-around md:justify-center space-x-12  uppercase tracking-widest font-semibold text-xs text-gray-600 border-t">
 <div className="inline-block p-3">
+
 <li className="md:border-t md:border-gray-700 md:-mt-px md:text-gray-700">
 <i className="fas fa-th-large text-xl md:text-xs"></i>
 <span className="hidden md:inline">post</span>
 </li>
+
 </div>
 <li>
           <a className="inline-block p-3" href="inline">
