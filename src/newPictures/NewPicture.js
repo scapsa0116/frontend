@@ -32,23 +32,6 @@ handleSubmit = (e) => {
 }
 
 
-// handleChange = (e) => {
-//     this.setState({
-//     [e.target.image_url]: e.target.value,
-       
-//     })
-// }
-
-
-
-// handleDescription = (e) => {
-//     this.setState({
-//     [e.target.description]: e.target.value 
-//     })
-// }
-
-
-
 
     render(){
         return(

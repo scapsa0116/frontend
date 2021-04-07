@@ -4,18 +4,45 @@ class SignUp extends React.Component{
 
 
 
+    state = {
+        name: "",
+        email: "",
+        password: ""
+    }
 
+    handleSubmit = (e) => {
+        e.preventDefault();
+        const form = e.target
+        const body = new FormData()
+        body.append('user[name]', form.name.value)
+        body.append('user[email]', form.email.value)
+        body.append('user[password]', form.password.value)
 
-
-
-
+    
+    
+        fetch(`http://localhost:3000/users`,{
+            credentials: "include",
+            method: 'POST',
+            
+            body: body
+        })
+        .then(res => res.json())
+        .then(usersJson => {
+        //    this.props.history.push('/')
+        console.log(usersJson)
+        })
+        
+       
+    }
+    
 
 
 
 
     render(){
         return (
-            <div className="bg-grey-lighter min-h-screen flex flex-col">
+
+            <form  onSubmit={this.handleSubmit} className="bg-grey-lighter min-h-screen flex flex-col">
             <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
                 <div className="bg-white px-6 py-8 rounded shadow-md text-black w-full">
                     <h1 className="mb-8 text-3xl text-center">Sign up</h1>
@@ -60,7 +87,7 @@ class SignUp extends React.Component{
                     </a>.
                 </div>
             </div>
-        </div>
+        </form>
         )
 
     }

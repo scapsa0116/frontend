@@ -160,11 +160,11 @@ render(){
              className="inline-block bg-green-500 px-2 py-1 text-white font-semibold text-sm rounded"
             >
               <svg
-                class="h-6 w-6"
+                className="h-6 w-6"
                 fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="1.5"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
               >
@@ -184,9 +184,9 @@ render(){
               <svg
                 className="h-6 w-6"
                 fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="1.5"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
               >

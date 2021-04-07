@@ -6,9 +6,9 @@ const IndividualPicture = ({picture}) => {
 
   
     return (
-          
-    <li key={picture.id}>
-    <div className=" rounded overflow-hidden border w-full lg:w-6/12   md:w-6/12 bg-white mx-3 md:mx-0 lg:mx-0">
+      <div > 
+    <li key={picture.id} className="flex items-center justify-center">
+    <div className="rounded overflow-hidden border w-full lg:w-6/12 md:w-6/12 bg-white mx-3 md:mx-0 lg:mx-0 m-10">
     <div className="w-full flex justify-between p-3">
     <div className="flex">
     <div className="rounded-full h-8 w-8 bg-gray-500 flex items-center justify-center overflow-hidden">
@@ -36,14 +36,16 @@ const IndividualPicture = ({picture}) => {
      <span className="font-medium mr-2">{picture.user_name}</span>{picture.description}
      </div>
      </div>
-     <div className="text-sm mb-2 text-gray-400 cursor-pointer font-medium">View all 14 comments</div>
+     <Link to ={`/pictures/${picture.id}`}>
+     <div className="text-sm mb-2 text-gray-400 cursor-pointer font-medium">View all comments</div>
+     </Link>
      <div className="mb-2">
      <div className="mb-2 text-sm">
-     <span className="font-medium mr-2">razzle_dazzle</span> Dude! How cool! I went to New Zealand last summer and had a blast taking the tour! So much to see! Make sure you bring a good camera when you go!
      </div>
      </div>
  </div>
  </li>
+ </div>   
  
     )
 }

@@ -8,7 +8,8 @@ class OnePicture extends React.Component {
     state={
         picture: {},
         reviews: [],
-        loading: true
+        loading: true,
+        comment: "",
     }
 
     componentDidMount() {
@@ -25,6 +26,46 @@ class OnePicture extends React.Component {
                 })
           })
       }
+
+
+      handleSubmit = (e) => {
+        e.preventDefault();
+        const form = e.target
+        const body = new FormData()
+       body.append('review[picture_id]', this.props.match.params.pictureId)
+        body.append('review[comment]', form.comment.value)
+    
+        const pictureId = this.props.match.params.pictureId
+        console.log(this.props)
+         fetch(`http://localhost:3000/pictures/${pictureId}/reviews`,{
+            credentials: "include",
+             method: 'POST',
+             body: body
+         })
+           .then(res => res.json())
+           .then(({comment})=>{
+               console.log(comment)
+               this.setState({
+                   comment,
+                   loading:false,
+                 })
+           })
+        // fetch(`http://localhost:3000/reviews`,{
+        //     credentials: "include",
+        //     method: 'POST',
+        //     body: body
+        // })
+        // .then(res => res.json())
+        // .then(reviewJson => {
+        // //    this.props.history.push('/')
+        // console.log(reviewJson)
+        // })
+        
+       
+    }
+
+
+
     render(){
 
         if (this.state.loading) {
@@ -35,8 +76,8 @@ class OnePicture extends React.Component {
         return(
 
             
-         
-            <div className=" rounded overflow-hidden border w-full lg:w-6/12 md:w-6/12 bg-white mx-3 md:mx-0 lg:mx-0">
+         <div className = "flex items-center justify-center ">
+            <div className=" rounded overflow-hidden border w-full lg:w-6/12 md:w-6/12 bg-white mx-3 md:mx-0 lg:mx-0 m-20" >
             <div className="w-full flex justify-between p-3">
             <div className="flex">
             <div className="rounded-full h-8 w-8 bg-gray-500 flex items-center justify-center overflow-hidden" key={this.state.picture.id}>
@@ -66,9 +107,21 @@ class OnePicture extends React.Component {
                  <div className="mb-2 text-sm">
                  <span className="font-medium mr-2">{review.user_name}</span> {review.comment}
                  </div>
+                 {this.state.comment.user_name}{this.state.comment}
+
                  </div>
              ))}
+
+             <form key={this.state.picture.id} onSubmit={this.handleSubmit}>
+             <input 
+             type = "text"
+             name="comment"
+             className="block w-full pl-10 pr-3 py-2 border border-gray-400 rounded-md leading-5 bg-gray-100 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:border-blue-300 focus:shadow-outline-blue sm:text-sm transition duration-150 ease-in-out"
+             placeholder = "Add a review"
+             />
+             </form>
              
+         </div>
          </div>
          
             )
