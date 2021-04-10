@@ -1,6 +1,7 @@
 import React from 'react';
 import PictureList from '../container/PictureList'
-
+import { connect } from 'react-redux'
+// import { fetchPictures } from './actions/pictures'
 class PicturesContainer extends React.Component {
 
 state = {
@@ -10,23 +11,7 @@ state = {
 
 
 componentDidMount(){
-    return (
-        fetch("http://localhost:3000/", {
-        method: 'GET',
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        }
-
-        })
-        .then(res => res.json())
-        .then(pictures =>  {
-        this.setState({ 
-            pictures: pictures,
-            loading: false
-        })
-        })
-        )
+    
 }
 
 
@@ -40,4 +25,17 @@ componentDidMount(){
     }
 }
 
-export default PicturesContainer;
+
+mapStateToProps= (state) => {
+    return{
+pictures: state.pictures.list
+    }
+}
+
+
+mapDispatchToProps=(dispatch)=>{
+    return{
+
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps) (PicturesContainer);

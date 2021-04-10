@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App.js';
+import picturesReducer from './reducers/pictures'
 
 import{ createStore, applyMiddleware, compose, combineReducers} from 'redux';
 import thunk from 'redux-thunk';
@@ -18,7 +19,8 @@ const currentUserReducer = (state = null, action) => {
 
 
 const rootReducer = combineReducers({
-  currentUser: currentUserReducer
+  currentUser: currentUserReducer,
+  pictures: picturesReducer,
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
