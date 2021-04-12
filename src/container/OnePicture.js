@@ -1,95 +1,75 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { fetchPicture } from '../actions/pictures'
 
 
 
 class OnePicture extends React.Component {
 
 
-    state={
-        picture: {},
-        reviews: [],
-        loading: true,
-        comment: "",
-    }
+    // state={
+    //     picture: {},
+    //     reviews: [],
+    //     loading: true,
+    //     comment: "",
+    // }
 
     componentDidMount() {
        const pictureId = this.props.match.params.pictureId
+       this.props.dispatchFetchPicture(pictureId)
        console.log(this.props)
-        fetch(`http://localhost:3000/pictures/${pictureId}`)
-          .then(res => res.json())
-          .then(({picture, reviews})=>{
-              console.log(picture)
-              this.setState({
-                  picture,
-                  reviews,
-                  loading:false,
-                })
-          })
       }
 
 
-      handleSubmit = (e) => {
-        e.preventDefault();
-        const form = e.target
-        const body = new FormData()
-       body.append('review[picture_id]', this.props.match.params.pictureId)
-        body.append('review[comment]', form.comment.value)
+    //   handleSubmit = (e) => {
+    //     e.preventDefault();
+    //     const form = e.target
+    //     const body = new FormData()
+    //    body.append('review[picture_id]', this.props.match.params.pictureId)
+    //     body.append('review[comment]', form.comment.value)
     
-        const pictureId = this.props.match.params.pictureId
-        console.log(this.props)
-         fetch(`http://localhost:3000/pictures/${pictureId}/reviews`,{
-            credentials: "include",
-             method: 'POST',
-             body: body
-         })
-           .then(res => res.json())
-           .then(({comment})=>{
-               console.log(comment)
-               this.setState({
-                   comment,
-                   loading:false,
-                 })
-           })
-        // fetch(`http://localhost:3000/reviews`,{
-        //     credentials: "include",
-        //     method: 'POST',
-        //     body: body
-        // })
-        // .then(res => res.json())
-        // .then(reviewJson => {
-        // //    this.props.history.push('/')
-        // console.log(reviewJson)
-        // })
-        
+    //     const pictureId = this.props.match.params.pictureId
+    //     console.log(this.props)
+    //      fetch(`http://localhost:3000/pictures/${pictureId}/reviews`,{
+    //         credentials: "include",
+    //          method: 'POST',
+    //          body: body
+    //      })
+    //        .then(res => res.json())
+    //        .then(({comment})=>{
+    //            console.log(comment)
+    //            this.setState({
+    //                comment,
+    //                loading:false,
+    //              })
+    //        })
        
-    }
+    // }
 
 
 
     render(){
 
-        if (this.state.loading) {
+        if (this.props.loadingState !== 'successful') {
             return <div>Loading Spinner</div>
           }
-          
+          console.log(this.props)
         
         return(
-
-            
          <div className = "flex items-center justify-center ">
             <div className=" rounded overflow-hidden border w-full lg:w-6/12 md:w-6/12 bg-white mx-3 md:mx-0 lg:mx-0 m-20" >
             <div className="w-full flex justify-between p-3">
             <div className="flex">
-            <div className="rounded-full h-8 w-8 bg-gray-500 flex items-center justify-center overflow-hidden" key={this.state.picture.id}>
-            <img src={this.state.picture.image_url} alt="profilepic"/>
+            <div className="rounded-full h-8 w-8 bg-gray-500 flex items-center justify-center overflow-hidden" key={this.props.picture.id}>
+            <img src={this.props.picture.image_url} alt="profilepic"/>
         
             </div>
-            <span className="pt-1 ml-2 font-bold text-sm">{this.state.picture.user_name}</span>
+            <span className="pt-1 ml-2 font-bold text-sm">{this.props.picture.user_name}</span>
             </div>
             <span className="px-2 hover:bg-gray-300 cursor-pointer rounded"><i className="fas fa-ellipsis-h pt-2 text-lg"></i></span>
              </div> 
              
-             <img className="w-full bg-cover" src={this.state.picture.image_url} alt='img' />
+             <img className="w-full bg-cover" src={this.props.picture.image_url} alt='img' />
              
              <div className="px-3 pb-2">
              <div className="pt-2">
@@ -98,21 +78,21 @@ class OnePicture extends React.Component {
         
              </div>
              <div className="pt-1">
-             <span className="font-medium mr-2">{this.state.picture.user_name}</span>{this.state.picture.description}
+             <span className="font-medium mr-2">{this.props.picture.user_name}</span>{this.props.picture.description}
              </div>
              </div>
              <div className="text-sm mb-2 text-gray-400 cursor-pointer font-medium">View all 14 comments</div>
-             {this.state.reviews.map((review)=> (
+             {this.props.reviews.map((review)=> (
                  <div className="mb-2" key={review.id}>
                  <div className="mb-2 text-sm">
                  <span className="font-medium mr-2">{review.user_name}</span> {review.comment}
                  </div>
-                 {this.state.comment.user_name}{this.state.comment}
+                 {this.props.comment.user_name}{this.props.comment}
 
                  </div>
              ))}
 
-             <form key={this.state.picture.id} onSubmit={this.handleSubmit}>
+             <form key={this.props.picture.id} onSubmit={this.handleSubmit}>
              <input 
              type = "text"
              name="comment"
@@ -127,5 +107,26 @@ class OnePicture extends React.Component {
             )
              }
         }
-        export default OnePicture
+
+        const mapStateToProps = (state, {match} ) => {
+            const pictureId = match.params.pictureId
+            let loadingState = state.reviews.picturesLoaded[pictureId] || "notStarted"
+            console.log(loadingState)
+
+        return {
+                picture: state.pictures.list.find((picture) => picture.id == pictureId),
+                reviews: state.reviews.list.filter((review )=> review.picture_id == pictureId),
+                loadingState
+
+              }
+        }
+
+        const mapDispatchToProps = (dispatch) => {
+            return{
+                dispatchFetchPicture: (pictureId) => dispatch(fetchPicture(pictureId)),
+            }
+
+        }
+        
+        export default connect(mapStateToProps, mapDispatchToProps) (OnePicture)
     

@@ -1,41 +1,41 @@
 import React from 'react';
 import PictureList from '../container/PictureList'
 import { connect } from 'react-redux'
-// import { fetchPictures } from './actions/pictures'
+import { fetchPictures } from '../actions/pictures'
 class PicturesContainer extends React.Component {
-
-state = {
-    pictures: [],
-    loading: true
-}
 
 
 componentDidMount(){
-    
+    this.props.dispatchFetchPictures()
 }
 
 
 
     render(){
+        if (this.props.loadingState === "notStarted"){
+            return null
+        }
         return (
             <div className="max-w-6xl mx-auto mt-20">
-               {this.state.loading ? 'animate-spin': <PictureList pictures = {this.state.pictures}/> }
+               {this.props.loadingState === "inProgress" ? ('animate-spin'): (<PictureList pictures = {this.props.pictures}/>) }
             </div>
         )
     }
 }
 
 
-mapStateToProps= (state) => {
+const mapStateToProps= (state) => {
     return{
-pictures: state.pictures.list
+        loadingState: state.pictures.loadingState,
+        pictures: state.pictures.list,
+        // pictures: state.pictures.pictures
     }
 }
 
 
-mapDispatchToProps=(dispatch)=>{
+const mapDispatchToProps=(dispatch)=>{
     return{
-
+dispatchFetchPictures: () => dispatch(fetchPictures())
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps) (PicturesContainer);
