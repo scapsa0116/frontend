@@ -1,4 +1,4 @@
-import {START_LOADING_PICTURE, SUCCESUFULY_LOADED_PICTURE_REVIEWS} from '../actions/index';
+import {START_LOADING_PICTURE, SUCCESUFULY_LOADED_PICTURE_REVIEWS, SUCCESSFULLY_CREATED_REVIEW} from '../actions/index';
 
 
 
@@ -25,7 +25,13 @@ export default function pictureReducer(state=initialState, action){
                 list: state.list
                 .filter((review) => review.picture_id !== action.payload.picture.id)
                 .concat(action.payload.reviews),
+                
             };
+            case SUCCESSFULLY_CREATED_REVIEW:
+                return{
+                    ...state,
+                    list: state.list.concat(action.payload) 
+                }
             default:
                return state
     }

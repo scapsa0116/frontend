@@ -1,36 +1,38 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { createUser } from '../actions/newUser'
 
 class SignUp extends React.Component{
 
 
 
-    state = {
-        name: "",
-        email: "",
-        password: ""
-    }
+    // state = {
+    //     name: "",
+    //     email: "",
+    //     password: "",
+    //     errors: {}
+    // }
 
     handleSubmit = (e) => {
         e.preventDefault();
         const form = e.target
-        const body = new FormData()
-        body.append('user[name]', form.name.value)
-        body.append('user[email]', form.email.value)
-        body.append('user[password]', form.password.value)
+        const formData = new FormData()
+        formData.append('user[name]', form.name.value)
+        formData.append('user[email]', form.email.value)
+        formData.append('user[password]', form.password.value)
 
     
     
-        fetch(`http://localhost:3000/users`,{
-            credentials: "include",
-            method: 'POST',
-            
-            body: body
-        })
-        .then(res => res.json())
-        .then(usersJson => {
-        //    this.props.history.push('/')
-        console.log(usersJson)
-        })
+        this.props.dispatchCreateUser(formData)
+        .then(userJson => {
+            this.props.history.push('/')
+          })
+          .catch(errors => {
+            this.setState({
+              errors
+            })
+          })
+        
         
        
     }
@@ -94,4 +96,10 @@ class SignUp extends React.Component{
     
 }
 
-export default SignUp
+const mapDispatchToProps = (dispatch) => {
+    return {
+        dispatchCreateUser: (formData) => dispatch(createUser(formData))
+    }
+  }
+
+export default connect(null, mapDispatchToProps)(SignUp)

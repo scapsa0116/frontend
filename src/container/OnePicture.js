@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { fetchPicture } from '../actions/pictures'
-
+import { createReview } from '../actions/reviews'
 
 
 class OnePicture extends React.Component {
@@ -21,30 +21,19 @@ class OnePicture extends React.Component {
       }
 
 
-    //   handleSubmit = (e) => {
-    //     e.preventDefault();
-    //     const form = e.target
-    //     const body = new FormData()
-    //    body.append('review[picture_id]', this.props.match.params.pictureId)
-    //     body.append('review[comment]', form.comment.value)
+      handleSubmit = (e) => {
+        e.preventDefault();
+        const form = e.target
+        const formData = new FormData()
+        formData.append('review[picture_id]', this.props.match.params.pictureId)
+        formData.append('review[comment]', form.comment.value)
     
-    //     const pictureId = this.props.match.params.pictureId
-    //     console.log(this.props)
-    //      fetch(`http://localhost:3000/pictures/${pictureId}/reviews`,{
-    //         credentials: "include",
-    //          method: 'POST',
-    //          body: body
-    //      })
-    //        .then(res => res.json())
-    //        .then(({comment})=>{
-    //            console.log(comment)
-    //            this.setState({
-    //                comment,
-    //                loading:false,
-    //              })
-    //        })
+        // const pictureId = this.props.match.params.pictureId
+         this.props.dispatchCreateReview(formData)
+         .then(() => {this.props.history.push(`/pictures/${this.props.match.params.pictureId}`)
+         })
        
-    // }
+    }
 
 
 
@@ -87,7 +76,7 @@ class OnePicture extends React.Component {
                  <div className="mb-2 text-sm">
                  <span className="font-medium mr-2">{review.user_name}</span> {review.comment}
                  </div>
-                 {this.props.comment.user_name}{this.props.comment}
+                 {/* {this.props.comment.user_name}{this.props.comment} */}
 
                  </div>
              ))}
@@ -116,7 +105,8 @@ class OnePicture extends React.Component {
         return {
                 picture: state.pictures.list.find((picture) => picture.id == pictureId),
                 reviews: state.reviews.list.filter((review )=> review.picture_id == pictureId),
-                loadingState
+                loadingState,
+                
 
               }
         }
@@ -124,6 +114,7 @@ class OnePicture extends React.Component {
         const mapDispatchToProps = (dispatch) => {
             return{
                 dispatchFetchPicture: (pictureId) => dispatch(fetchPicture(pictureId)),
+                dispatchCreateReview: (formData) => dispatch(createReview(formData))
             }
 
         }

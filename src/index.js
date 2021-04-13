@@ -4,6 +4,8 @@ import App from './App.js';
 import picturesReducer from './reducers/pictures'
 import { currentUserReducer } from './reducers/currentUser'
 import pictureReducer from './reducers/picture'
+import { newUserReducer } from './reducers/currentUser'
+import profileReducer from './reducers/profileReducer'
 
 import{ createStore, applyMiddleware, compose, combineReducers} from 'redux';
 import thunk from 'redux-thunk';
@@ -14,6 +16,8 @@ const rootReducer = combineReducers({
   currentUser: currentUserReducer,
   pictures: picturesReducer,
   reviews: pictureReducer,
+  users: newUserReducer,
+  picturesUser: profileReducer
   
 })
 

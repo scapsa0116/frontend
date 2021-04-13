@@ -1,38 +1,28 @@
 import React from 'react';
 // import NewPicture from '../newPictures/NewPicture.js'
+import {connect} from 'react-redux'
+import { fetchProfile } from '../actions/profileContainer'
 
 
 class ProfileContainer extends React.Component {
 
-    state = {
-      user: {},
-      pictures: [],
-      loading: true
-    }
+    // state = {
+    //   user: {},
+    //   pictures: [],
+    //   loading: true
+    // }
 
  
 
     componentDidMount(){
       const userId = this.props.match.params.userId
-      // console.log(userId)
-      fetch(`http://localhost:3000/users/${userId}`)
-        .then(res => res.json())
-        .then((user, pictures) => {
-          console.log(user, pictures)
-         
-         this.setState({ 
-           user,
-           pictures,
-           loading: false
-         })
-        }) 
-        
+        this.props.dispatchFetchUser(userId)
       }
 
     
 
     render(){
-      if (this.state.loading) {
+      if (this.props.loadingState !== "successful") {
         return <div>Loading Spinner</div>
       }
       
@@ -84,8 +74,8 @@ class ProfileContainer extends React.Component {
 
 
       </div>
-      <div className="hidden md:block" key={this.state.user.id}>
-          <h1 className="font-semibold">{this.state.user.name}</h1>
+      <div className="hidden md:block" key={this.props.user.id}>
+          <h1 className="font-semibold">{this.props.user.name}</h1>
           <span>Travel, Nature and Music</span>
           <p>Lorem ipsum dolor sit amet consectetur</p>
         </div>
@@ -165,7 +155,7 @@ class ProfileContainer extends React.Component {
 <div className="flex flex-wrap overflow-hidden">
 
   <div className=" card w-full overflow-hidden grid grid-cols-3 flex pt-50"> 
-  {this.state.user.pictures.map((picture) => (
+  {this.props.user.pictures.map((picture) => (
   <div className="flex-1 text-center px-4 py-2 m-2"key={picture.id} >
   <img className="w-full sm:h-80 " src={picture.image_url} alt="" />
   {picture.description}
@@ -184,4 +174,20 @@ class ProfileContainer extends React.Component {
     }
 }
 
-export default ProfileContainer
+const mapStateToProps = (state, { match }) => {
+  const userId = match.params.userId
+  let loadingState = state.picturesUser.usersLoaded[userId] || 'notStarted'
+  return {
+    user: state.users.list.find((user) => user.id == userId),
+    picturesUser: state.pictures.filter((picture) => picture.user_id == userId),
+    loadingState,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+  dispatchFetchUser: (userId) => dispatch(fetchProfile(userId))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps) (ProfileContainer)
