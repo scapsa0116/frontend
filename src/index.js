@@ -5,8 +5,8 @@ import picturesReducer from './reducers/pictures'
 import { currentUserReducer } from './reducers/currentUser'
 import pictureReducer from './reducers/picture'
 import { newUserReducer } from './reducers/currentUser'
-import profileReducer from './reducers/profileReducer'
-
+import {usersReducer} from './reducers/users'
+import userReducer from './reducers/user'
 import{ createStore, applyMiddleware, compose, combineReducers} from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux'
@@ -17,8 +17,8 @@ const rootReducer = combineReducers({
   pictures: picturesReducer,
   reviews: pictureReducer,
   users: newUserReducer,
-  picturesUser: profileReducer
-  
+  usersPictures: usersReducer,
+  userPictures: userReducer
 })
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

@@ -1,7 +1,7 @@
 import React from 'react';
 // import NewPicture from '../newPictures/NewPicture.js'
 import {connect} from 'react-redux'
-import { fetchProfile } from '../actions/profileContainer'
+import { fetchUser } from '../actions/userPictures'
 
 
 class ProfileContainer extends React.Component {
@@ -176,17 +176,19 @@ class ProfileContainer extends React.Component {
 
 const mapStateToProps = (state, { match }) => {
   const userId = match.params.userId
-  let loadingState = state.picturesUser.usersLoaded[userId] || 'notStarted'
+  console.log(userId)
+  let loadingState = state.pictures.usersLoaded[userId] || 'notStarted'
+  console.log('state' ,loadingState)
   return {
-    user: state.users.list.find((user) => user.id == userId),
-    picturesUser: state.pictures.filter((picture) => picture.user_id == userId),
+    user: state.users.list.find((user) => user.id ==userId),
+    userPictures: state.pictures.list.filter((picture) => picture.user_id == userId),
     loadingState,
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-  dispatchFetchUser: (userId) => dispatch(fetchProfile(userId))
+  dispatchFetchUser: (userId) => dispatch(fetchUser(userId))
   }
 }
 

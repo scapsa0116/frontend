@@ -1,5 +1,4 @@
-import {SUCCESSFULLY_CREATED_USER, SET_CURRENT_USER} from '../actions'
-
+import {SUCCESSFULLY_CREATED_USER, SET_CURRENT_USER, SUCCESUFULY_LOADED_PICTURES_HOME} from '../actions'
 
 export const currentUserReducer = (state = null, action) => {
     switch (action.type) {
@@ -14,7 +13,7 @@ export const currentUserReducer = (state = null, action) => {
 
 
   const initialState = {
-    // loadingState: 'notStarted',
+    usersLoaded: {},
     list: []
   }
 
@@ -31,3 +30,25 @@ export const currentUserReducer = (state = null, action) => {
     }
 
   }
+
+// const initialCurrentUserState = {
+//   loadingState: 'notStarted' || 'inProgress' || 'loaded', 
+//     list: []
+// }
+
+
+
+
+//   export default function currentUserPictures(state = initialCurrentUserState, action) {
+//     switch (action.type){
+//       case SUCCESUFULY_LOADED_PICTURES_HOME:
+//         return {
+//           list: action.payload,
+//           loadinState: "succesful"
+//         }
+//         default:
+//         return state
+
+//     }
+
+//   }

@@ -28,7 +28,8 @@ const mapStateToProps= (state) => {
     return{
         loadingState: state.pictures.loadingState,
         pictures: state.pictures.list,
-        // pictures: state.pictures.pictures
+        
+       
     }
 }
 

@@ -46,7 +46,7 @@ handleLoginFormSubmit = event => {
 
   const userInfo = this.state.loginForm
 
-  const headers = {
+  fetch("http://localhost:3000/login",{
     method: 'POST',
     credentials: "include",
     headers: {
@@ -55,10 +55,7 @@ handleLoginFormSubmit = event => {
     body: JSON.stringify({
       user: userInfo
     })
-  }
-  
-
-  fetch("http://localhost:3000/login", headers )
+  } )
   .then(res => res.json())
   .then(resp =>{
     if (resp.error) {

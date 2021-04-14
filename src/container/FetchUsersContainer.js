@@ -1,35 +1,39 @@
 import React from 'react';
 import UsersList from '../container/UsersList.js'
+import { connect } from 'react-redux'
+import { fetchUsers } from '../actions/userPictures'
 
 
 
 class FetchUsersContainer extends React.Component {
 
-    state={
-        users: {},
-        pictures: [],
-        loading: true
-    }
+    // state={
+    //     users: {},
+    //     pictures: [],
+    //     loading: true
+    // }
     
     componentDidMount(){
        
-        return (
-            fetch("http://localhost:3000/users/", {
-            method: 'GET',
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            }
+        // return (
+        //     fetch("http://localhost:3000/users/", {
+        //     method: 'GET',
+        //     headers: {
+        //         "Accept": "application/json",
+        //         "Content-Type": "application/json"
+        //     }
     
-            })
-            .then(res => res.json())
-            .then(users =>  {
-            this.setState({
-                users: users,
-                loading: false
-            })
-            })
-         )
+        //     })
+        //     .then(res => res.json())
+        //     .then(users =>  {
+        //     this.setState({
+        //         users: users,
+        //         loading: false
+        //     })
+        //     })
+        //  )
+
+        this.props.dispatchFetchUsers()
     }
     
 
@@ -37,13 +41,32 @@ class FetchUsersContainer extends React.Component {
 
 
     render(){
+        if (this.props.loadingState === "notStarted"){
+            return null
+        }
         return(
             <div> 
-                {this.state.loading ? 'animate-spin': <UsersList users = {this.state.users}/> }
+                {this.props.loadingState === "inProgress" ? ('animate-spin'): <UsersList users = {this.props.users}/> }
             </div>
         )
     }
 }
 
 
-export default FetchUsersContainer
+const mapStateToProps= (state) => {
+    return{
+        loadingState: state.users.loadingState,
+        usersPictures: state.users.list,
+        
+       
+    }
+}
+
+
+const mapDispatchToProps=(dispatch)=>{
+    return{
+    dispatchFetchUsers: () => dispatch(fetchUsers())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FetchUsersContainer)

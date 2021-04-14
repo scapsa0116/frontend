@@ -1,4 +1,4 @@
-import {START_LOADING_PICTURES, SUCCESUFULY_LOADED_PICTURE_REVIEWS, SUCCESUFULY_LOADED_PICTURES} from '../actions'
+import {START_LOADING_PICTURES, SUCCESUFULY_LOADED_PICTURES, SUCCESUFULY_LOADED_PICTURE_REVIEWS,SUCCESUFULY_LOADED_PICTURES_HOME} from '../actions'
 
 
 const initialState = {
@@ -25,7 +25,13 @@ case START_LOADING_PICTURES:
                    ...state,
                    list: state.list.concat(action.payload.picture),
                }
+               
            }
+           case SUCCESUFULY_LOADED_PICTURES_HOME:
+          return {
+            list: action.payload,
+            loadingState: "successful",
+        };
     default:
         return state
 }
