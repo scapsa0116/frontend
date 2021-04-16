@@ -155,7 +155,7 @@ class ProfileContainer extends React.Component {
 <div className="flex flex-wrap overflow-hidden">
 
   <div className=" card w-full overflow-hidden grid grid-cols-3 flex pt-50"> 
-  {this.props.user.pictures.map((picture) => (
+  {this.props.pictures.map((picture) => (
   <div className="flex-1 text-center px-4 py-2 m-2"key={picture.id} >
   <img className="w-full sm:h-80 " src={picture.image_url} alt="" />
   {picture.description}
@@ -177,11 +177,11 @@ class ProfileContainer extends React.Component {
 const mapStateToProps = (state, { match }) => {
   const userId = match.params.userId
   console.log(userId)
-  let loadingState = state.pictures.usersLoaded[userId] || 'notStarted'
+  let loadingState = state.userPictures.usersLoaded[userId] || 'notStarted'
   console.log('state' ,loadingState)
   return {
-    user: state.users.list.find((user) => user.id ==userId),
-    userPictures: state.pictures.list.filter((picture) => picture.user_id == userId),
+    user: state.usersList.list.find((user) => user.id ==userId),
+    pictures: state.pictures.list.filter((picture) => picture.user_id == userId),
     loadingState,
   }
 }

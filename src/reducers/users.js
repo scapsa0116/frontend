@@ -2,7 +2,7 @@ import {START_LOADING_USERS, SUCCESSFUL_LOADED_USERS, SUCCESSFUL_LOADED_PICTURES
 
 
 const initialState = {
-    loadingState: 'notStarted' || 'inProgress' || 'loaded', 
+    loadingState: 'notStarted', 
     list: []
 }
 
@@ -22,7 +22,9 @@ export function usersReducer(state = initialState, action){
                         }else {
                             return {
                                 ...state, 
-                                list: state.list.find(user => user.id == action.payload.user.id)
+                                list: state.list
+                                .filter((user) => user.id !== action.payload.user.id)
+                                .concat(action.payload.user),
                             }
                         }
                     default: 

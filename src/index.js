@@ -17,7 +17,7 @@ const rootReducer = combineReducers({
   pictures: picturesReducer,
   reviews: pictureReducer,
   users: newUserReducer,
-  usersPictures: usersReducer,
+  usersList: usersReducer,
   userPictures: userReducer
 })
 
