@@ -40,8 +40,8 @@ console.log(handleLoginFormChange, handleLoginFormSubmit, name, email, password)
                     <button
                         type="submit"
                         value="Login"
-                        className="w-full text-center py-3 rounded bg-green text-white hover:bg-green-dark focus:outline-none my-1"
-                    >Create Account</button>
+                        className="w-full text-center py-3 rounded h-10 px-5 m-2 duration-150 bg-purple-600 rounded-lg focus:shadow-outline hover:bg-purple-700 text-purple-100"
+                    >Log In</button>
                     
                     </form>
                  

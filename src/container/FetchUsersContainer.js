@@ -14,24 +14,6 @@ class FetchUsersContainer extends React.Component {
     // }
     
     componentDidMount(){
-       
-        // return (
-        //     fetch("http://localhost:3000/users/", {
-        //     method: 'GET',
-        //     headers: {
-        //         "Accept": "application/json",
-        //         "Content-Type": "application/json"
-        //     }
-    
-        //     })
-        //     .then(res => res.json())
-        //     .then(users =>  {
-        //     this.setState({
-        //         users: users,
-        //         loading: false
-        //     })
-        //     })
-        //  )
 
         this.props.dispatchFetchUsers()
     }

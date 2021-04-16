@@ -70,7 +70,7 @@ class SignUp extends React.Component{
 
                     <button
                         type="submit"
-                        className="w-full text-center py-3 rounded bg-green text-white hover:bg-green-dark focus:outline-none my-1"
+                        className="w-full text-center py-3 rounded h-10 px-5 m-2 duration-150 bg-purple-600 rounded-lg focus:shadow-outline hover:bg-purple-700 text-purple-100"
                     >Create Account</button>
 
                     <div className="text-center text-sm text-grey-dark mt-4">

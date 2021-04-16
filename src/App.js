@@ -1,5 +1,4 @@
 import React from 'react'
-import FetchUsersContainer from './container/FetchUsersContainer.js'
 import SignUp from './container/SignUp.js'
 import LogIn from './container/LogIn.js'
 import PicturesContainer from './container/PicturesContainer'
@@ -12,6 +11,7 @@ import Logout from './container/Logout'
 import {BrowserRouter as Router, Switch, Route, NavLink} from "react-router-dom";
 import {connect} from 'react-redux'
 import { getCurrentUser } from './actions/currentUser.js'
+// import SearchField from 'react-search-field';
 class App extends React.Component {
 
   constructor(){
@@ -128,7 +128,7 @@ render(){
   return (
     <div>
       <h2>
-        {currentUser ? `:Logged in as ${currentUser.name}` : "Not Loged In"}
+        {currentUser ? `Welcome ${currentUser.name}` : "Not Loged In"}
       </h2>
 
    
@@ -142,12 +142,15 @@ render(){
     <NavLink to="/">
      <img className="h-10" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/150px-Instagram_logo.svg.png" alt="instagram" />
     </NavLink>
-
+    
      <div className="relative hidden sm:block text-gray-500">
+     
      <input className="search-bar max-w-xs border rounded bg-gray-200 px-4
             text-center outline-none focus:border-gray-400" type="search" placeholder="Search"/> 
-     <i className="fa fa-search absolute top-0 left-0 ml-12 mt-1"></i>      
+  
+     {/* <i className="fa fa-search absolute top-0 left-0 ml-12 mt-1"></i>       */}
      </div>
+    
      <div className="space-x-4">
     
 
@@ -197,7 +200,7 @@ render(){
    
 
       <NavLink to="/login">
-      <button className="inline-block bg-blue-500 px-2 py-1 text-white font-semibold text-sm rounded" href="#">Log In</button>
+      <button className="inline-block text-blue-500 font-semibold text-sm" href="#">Log In</button>
       </NavLink>
 
       <NavLink to="/signup">
@@ -222,17 +225,14 @@ render(){
                   <Logout logout={this.logout}/>
               </Route>
 
-              <Route path="/home">
+              <Route path="/home" >
                   <Home pictures = {this.state.pictures}
                         currentUser= {this.state}/>
               </Route>
               
               <Route exact path="/users/:userId" component={ProfileContainer}>
               </Route>
-
-              <Route exact path="/users/:userid" component={FetchUsersContainer}>
-              </Route>
-
+              
               <Route exact path='/pictures/:pictureId' component={OnePicture}>
               </Route>
 

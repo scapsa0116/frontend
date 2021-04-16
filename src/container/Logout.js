@@ -16,7 +16,7 @@ const Logout =({ logout }) => {
                     <button
                         type="submit"
                         value="Logout"
-                        className="inline-block bg-blue-500 px-2 py-1 text-white font-semibold text-sm rounded"
+                        className="w-full text-center py-3 inline-block bg-blue-500 px-2 py-1 text-white font-semibold text-sm rounded"
                     >Logout</button>
                     </form>
                 </div>
