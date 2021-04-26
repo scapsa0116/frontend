@@ -106,10 +106,10 @@ class NavBar extends React.Component {
   // };
 
   render() {
-    const { currentUser } = this.props;
+    // const { currentUser } = this.props;
     return (
       <div>
-        <h2>{currentUser ? `Welcome ${currentUser.name}` : "Not Loged In"}</h2>
+        {/* <h2>{currentUser ? `Welcome ${currentUser.name}` : "Not Loged In"}</h2> */}
 
         <div className='border-b px-4 py-2 bg-white'>
           <div className='flex flex-wrap items-center justify-between md:justify-around'>
