@@ -1,4 +1,6 @@
 import React from "react";
+import { connect } from "react-redux";
+import { fetchNewPicture } from "../actions/pictures";
 
 class NewPicture extends React.Component {
   state = {
@@ -24,6 +26,10 @@ class NewPicture extends React.Component {
         //    this.props.history.push('/')
         console.log(pictureJson);
       });
+
+    // this.props.dispatchFetchNewPicture(body).then(() => {
+    //   this.props.history.push(`/pictures/${this.props.pictures}`);
+    // });
   };
 
   render() {
@@ -60,4 +66,16 @@ class NewPicture extends React.Component {
   }
 }
 
-export default NewPicture;
+const mapStateToProps = (state) => {
+  return {
+    login: state.pictures.list
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    dispatchFetchNewPicture: (body) => dispatch(fetchNewPicture(body))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewPicture);

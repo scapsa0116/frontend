@@ -3,12 +3,6 @@ import { connect } from "react-redux";
 import { createUser } from "../actions/newUser";
 
 class SignUp extends React.Component {
-  // state = {
-  //     name: "",
-  //     email: "",
-  //     password: "",
-  //     errors: {}
-  // }
   // refaxtor this to use state instead of building the data with FormData
   handleSubmit = (e) => {
     e.preventDefault();

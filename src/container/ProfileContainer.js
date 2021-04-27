@@ -4,12 +4,6 @@ import { connect } from "react-redux";
 import { fetchUser } from "../actions/userPictures";
 
 class ProfileContainer extends React.Component {
-  // state = {
-  //   user: {},
-  //   pictures: [],
-  //   loading: true
-  // }
-
   componentDidMount() {
     const userId = this.props.match.params.userId;
     this.props.dispatchFetchUser(userId);
