@@ -40,19 +40,20 @@ export const fetchPicture = (pictureId) => {
   };
 };
 
-export const fetchNewPicture = (body) => {
+export const fetchNewPicture = (picture) => {
   return (dispatch) => {
-    dispatch({ type: SUCCESSFUL_CREATED_PICTURE });
     fetch(`http://localhost:3000/pictures`, {
       credentials: "include",
       method: "POST",
 
-      body: body
+      body: picture
     })
       .then((res) => res.json())
-      .then((pictureJson) => {
-        this.props.history.push("/");
-        console.log(pictureJson);
+      .then((data) => {
+        dispatch({
+          type: SUCCESSFUL_CREATED_PICTURE,
+          payload: data
+        });
       });
   };
 };

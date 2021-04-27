@@ -1,13 +1,10 @@
 import React from "react";
 import SignUp from "./container/SignUp.js";
-import LogIn from "./container/LogIn.js";
 import PicturesContainer from "./container/PicturesContainer";
 import OnePicture from "./container/OnePicture.js";
 import Terms from "./terms/terms.js";
 import ProfileContainer from "./container/ProfileContainer.js";
 import NewPicture from "./newPictures/NewPicture.js";
-import Home from "./container/Home";
-import Logout from "./container/Logout";
 import LogInForm from "./container/LogInForm";
 import {
   BrowserRouter as Router,
@@ -15,9 +12,6 @@ import {
   Route,
   NavLink
 } from "react-router-dom";
-import { connect } from "react-redux";
-import { getCurrentUser } from "./actions/currentUser.js";
-import NavBar from "./navBar/NavBar";
 import GetPictures from "./container/GetPictures";
 import LogOutForm from "./container/LogOutForm";
 

@@ -1,36 +1,44 @@
 import React from "react";
 import { connect } from "react-redux";
 import { fetchNewPicture } from "../actions/pictures";
+import { fetchCurrentUserPic } from "../actions/getPictures";
 
 class NewPicture extends React.Component {
-  state = {
-    image_url: "",
-    description: ""
-  };
+  // state = {
+  //   image_url: "",
+  //   description: ""
+  // };
 
   handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
     const body = new FormData();
-    body.append("picture[image]", form.image.files[0], form.image.value);
     body.append("picture[description]", form.description.value);
 
-    fetch(`http://localhost:3000/pictures`, {
-      credentials: "include",
-      method: "POST",
+    // form.image.files[0] &&
+    body.append("picture[image]", form.image.files[0], form.image.value);
 
-      body: body
-    })
-      .then((res) => res.json())
-      .then((pictureJson) => {
-        //    this.props.history.push('/')
-        console.log(pictureJson);
-      });
+    // fetch(`http://localhost:3000/pictures`, {
+    //   credentials: "include",
+    //   method: "POST",
 
-    // this.props.dispatchFetchNewPicture(body).then(() => {
-    //   this.props.history.push(`/pictures/${this.props.pictures}`);
+    //   body: body
+    // })
+    //   .then((res) => res.json())
+    //   .then((pictureJson) => {
+    //     //    this.props.history.push('/')
+    //     console.log(pictureJson);
+    //   });
+
+    this.props.dispatchFetchNewPicture(body);
+    //   .then(() => {
+    //   this.props.history.push(`/pictures`);
     // });
   };
+
+  componentDidMount() {
+    this.props.dipatchUserPictures();
+  }
 
   render() {
     return (
@@ -68,13 +76,14 @@ class NewPicture extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    login: state.pictures.list
+    userPictures: state.pictures.list
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    dispatchFetchNewPicture: (body) => dispatch(fetchNewPicture(body))
+    dipatchUserPictures: () => dispatch(fetchCurrentUserPic()),
+    dispatchFetchNewPicture: (picture) => dispatch(fetchNewPicture(picture))
   };
 };
 

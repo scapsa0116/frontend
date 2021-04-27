@@ -1,4 +1,5 @@
 import { LOADING_LOGIN_FORM } from ".";
+import { Redirect } from "react-router";
 
 export const setCurrentUser = ({ user }) => {
   return {
@@ -28,6 +29,7 @@ export const fetchLogInForm = (credentials) => {
         } else {
           dispatch(setCurrentUser(resp));
         }
+        <Redirect to='/' />;
       })
       .catch(console.log);
   };

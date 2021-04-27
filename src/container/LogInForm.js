@@ -30,6 +30,7 @@ class LogInForm extends React.Component {
 
     const { name, email, password } = this.state;
     this.props.dispatchLoginUser({ name, email, password });
+
     // .then(() => this.props.history.push("/"))
     // .catch(() => this.setState({ error: true }));
   };

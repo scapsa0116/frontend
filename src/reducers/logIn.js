@@ -13,7 +13,6 @@ export default function LogInReducer(state = initialState, action) {
         formSubmitted: false // after update user formsubmition reset
       };
     case SUCCESSFUL_LOGGEDIN:
-      console.log("login", action.payload);
       return {
         ...state,
         currentUser: action.payload

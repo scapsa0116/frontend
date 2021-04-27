@@ -6,21 +6,21 @@ import { logoutUser } from "../actions/logOut";
 class LogOutForm extends React.Component {
   logout = (event) => {
     event.preventDefault();
-    // fetch("http://localhost:3000/logout", {
-    //   credentials: "include",
-    //   method: "DELETE",
-    //   headers: {
-    //     "Content-Type": "application/json"
-    //   }
-    // })
-    //   .then((r) => r.json())
-    //   .then((resp) => alert(resp.message));
-    // this.setState({
-    //   currentUser: null,
-    //   pictures: []
-    // });
+    fetch("http://localhost:3000/logout", {
+      credentials: "include",
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then((r) => r.json())
+      .then((resp) => alert(resp.message));
+    this.setState({
+      currentUser: null,
+      pictures: []
+    });
     // localStorage.removeItem("token");
-    this.props.dispatchLogoutUser();
+    // this.props.dispatchLogoutUser();
   };
 
   render() {
