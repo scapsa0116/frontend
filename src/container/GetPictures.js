@@ -2,7 +2,7 @@ import React from "react";
 import Home from "../container/Home";
 import { connect } from "react-redux";
 import { getCurrentUser } from "../actions/currentUser.js";
-import { fetchCurrentUserPic } from "../actions/getPictures.js";
+import { fetchCurrentUserPic } from "../actions/pictures.js";
 
 class GetPictures extends React.Component {
   componentDidMount() {
@@ -21,9 +21,13 @@ class GetPictures extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+  // const userId = match.params.userId;
   return {
     currentUser: state.currentUser,
-    pictures: state.pictures.list
+    // user: state.usersList.list.find((user) => user.id == userId),
+    pictures: state.pictures.list.filter(
+      (picture) => picture.user_id === state.currentUser.id
+    )
   };
 };
 

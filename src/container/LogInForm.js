@@ -1,8 +1,7 @@
 import React from "react";
-import LogIn from "../container/LogIn.js";
 import { connect } from "react-redux";
 import { getCurrentUser } from "../actions/currentUser.js";
-import { fetchLogInForm } from "../actions/logIn";
+import { fetchLogInForm } from "../actions/currentUser";
 
 class LogInForm extends React.Component {
   componentDidMount() {
@@ -26,11 +25,12 @@ class LogInForm extends React.Component {
   };
 
   handleSubmit = (event) => {
+    console.log("submitting login form");
     event.preventDefault();
 
     const { name, email, password } = this.state;
     this.props.dispatchLoginUser({ name, email, password });
-
+    this.props.history.push("/");
     // .then(() => this.props.history.push("/"))
     // .catch(() => this.setState({ error: true }));
   };
@@ -68,6 +68,8 @@ class LogInForm extends React.Component {
 
   render() {
     const { currentUser } = this.props;
+    // const history = useHistory();
+    // console.log(history);
     return (
       <div className='bg-grey-lighter min-h-screen flex flex-col'>
         <div className='container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2'>
@@ -104,6 +106,9 @@ class LogInForm extends React.Component {
               />
 
               <button
+                // onClick={() => {
+                //   this.props.history.push("/");
+                // }}
                 type='submit'
                 value='Login'
                 className='w-full text-center py-3 rounded h-10 px-5 m-2 duration-150 bg-purple-600 rounded-lg focus:shadow-outline hover:bg-purple-700 text-purple-100'
@@ -120,7 +125,8 @@ class LogInForm extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    currentUser: state.currentUser
+    currentUser: state.currentUser,
+    pictures: state.pictures
   };
 };
 

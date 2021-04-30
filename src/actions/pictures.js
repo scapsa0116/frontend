@@ -3,7 +3,8 @@ import {
   SUCCESUFULY_LOADED_PICTURES,
   START_LOADING_PICTURE,
   SUCCESUFULY_LOADED_PICTURE_REVIEWS,
-  SUCCESSFUL_CREATED_PICTURE
+  SUCCESSFUL_CREATED_PICTURE,
+  SUCCESUFULY_LOADED_PICTURES_HOME
 } from ".";
 
 export const fetchPictures = () => {
@@ -54,6 +55,28 @@ export const fetchNewPicture = (picture) => {
           type: SUCCESSFUL_CREATED_PICTURE,
           payload: data
         });
+      });
+  };
+};
+
+export const fetchCurrentUserPic = () => {
+  return (dispatch) => {
+    fetch("http://localhost:3000/home", {
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then((resp) => resp.json())
+      .then((pictures) => {
+        if (pictures.error) {
+          alert("Not autorized");
+        } else {
+          dispatch({
+            type: SUCCESUFULY_LOADED_PICTURES_HOME,
+            payload: pictures
+          });
+        }
       });
   };
 };

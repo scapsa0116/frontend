@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { createUser } from "../actions/newUser";
+import { createUser } from "../actions/currentUser";
 
 class SignUp extends React.Component {
   // refaxtor this to use state instead of building the data with FormData

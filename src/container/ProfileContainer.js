@@ -1,7 +1,7 @@
 import React from "react";
 // import NewPicture from '../newPictures/NewPicture.js'
 import { connect } from "react-redux";
-import { fetchUser } from "../actions/userPictures";
+import { fetchUser } from "../actions/currentUser";
 
 class ProfileContainer extends React.Component {
   componentDidMount() {

@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { fetchNewPicture } from "../actions/pictures";
-import { fetchCurrentUserPic } from "../actions/getPictures";
+import { fetchCurrentUserPic } from "../actions/pictures";
 
 class NewPicture extends React.Component {
   // state = {
@@ -31,6 +31,7 @@ class NewPicture extends React.Component {
     //   });
 
     this.props.dispatchFetchNewPicture(body);
+    this.props.history.push("/home");
     //   .then(() => {
     //   this.props.history.push(`/pictures`);
     // });

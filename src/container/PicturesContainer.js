@@ -13,12 +13,6 @@ class PicturesContainer extends React.Component {
     }
     return (
       <div className='max-w-6xl mx-auto mt-20'>
-        <input
-          className='search-bar max-w-xs border rounded bg-gray-200 px-4
-            text-center outline-none focus:border-gray-400'
-          type='search'
-          placeholder='Search'
-        />
         {this.props.loadingState === "inProgress" ? (
           "animate-spin"
         ) : (

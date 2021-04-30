@@ -10,7 +10,8 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  NavLink
+  NavLink,
+  Redirect
 } from "react-router-dom";
 import GetPictures from "./container/GetPictures";
 import LogOutForm from "./container/LogOutForm";
@@ -31,13 +32,6 @@ class App extends React.Component {
               </NavLink>
 
               <div className='relative hidden sm:block text-gray-500'>
-                <input
-                  className='search-bar max-w-xs border rounded bg-gray-200 px-4
-            text-center outline-none focus:border-gray-400'
-                  type='search'
-                  placeholder='Search'
-                />
-
                 {/* <i className="fa fa-search absolute top-0 left-0 ml-12 mt-1"></i>       */}
               </div>
 
@@ -137,9 +131,7 @@ class App extends React.Component {
               <GetPictures />
             </Route>
 
-            <Route path='/login'>
-              <LogInForm />
-            </Route>
+            <Route path='/login' component={LogInForm} />
 
             <Route exact path='/signup'>
               <SignUp />

@@ -7,8 +7,6 @@ import pictureReducer from "./reducers/picture";
 import { newUserReducer } from "./reducers/currentUser";
 import { usersReducer } from "./reducers/users";
 import userReducer from "./reducers/user";
-import LogInReducer from "./reducers/logIn";
-import logOutReducer from "./reducers/logOut";
 import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import thunk from "redux-thunk";
 import { Provider } from "react-redux";
@@ -19,9 +17,7 @@ const rootReducer = combineReducers({
   reviews: pictureReducer,
   users: newUserReducer,
   usersList: usersReducer,
-  userPictures: userReducer,
-  auth: LogInReducer,
-  logOut: logOutReducer
+  userPictures: userReducer
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

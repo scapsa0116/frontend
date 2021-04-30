@@ -1,4 +1,10 @@
-import { SUCCESSFULLY_CREATED_USER, SET_CURRENT_USER } from "../actions";
+import {
+  SUCCESSFULLY_CREATED_USER,
+  SET_CURRENT_USER,
+  LOADING_LOGIN_FORM,
+  SUCCESSFUL_LOGGEDIN,
+  SUCCESSFUL_LOG_OUT
+} from "../actions";
 
 export const currentUserReducer = (state = null, action) => {
   switch (action.type) {
@@ -11,7 +17,8 @@ export const currentUserReducer = (state = null, action) => {
 
 const initialState = {
   usersLoaded: {},
-  list: []
+  list: [],
+  currentUser: {}
 };
 
 export const newUserReducer = (state = initialState, action) => {
@@ -21,27 +28,25 @@ export const newUserReducer = (state = initialState, action) => {
         ...state,
         list: state.list.concat(action.payload.user)
       };
+    case LOADING_LOGIN_FORM:
+      return {
+        ...state,
+        currentUser: action.payload,
+        formSubmitted: false // after update user formsubmition reset
+      };
+    case SUCCESSFUL_LOGGEDIN:
+      return {
+        ...state,
+        currentUser: action.payload
+      };
+    case SUCCESSFUL_LOG_OUT:
+      // debugger;
+      return {
+        ...state,
+        currentUser: {}
+      };
 
     default:
       return state;
   }
 };
-
-// const initialCurrentUserState = {
-//   loadingState: 'notStarted' || 'inProgress' || 'loaded',
-//     list: []
-// }
-
-//   export default function currentUserPictures(state = initialCurrentUserState, action) {
-//     switch (action.type){
-//       case SUCCESUFULY_LOADED_PICTURES_HOME:
-//         return {
-//           list: action.payload,
-//           loadinState: "succesful"
-//         }
-//         default:
-//         return state
-
-//     }
-
-//   }

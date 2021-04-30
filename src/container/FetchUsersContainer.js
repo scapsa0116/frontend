@@ -1,7 +1,7 @@
 import React from "react";
 import UsersList from "../container/UsersList.js";
 import { connect } from "react-redux";
-import { fetchUsers } from "../actions/userPictures";
+import { fetchUsers } from "../actions/currentUser";
 
 class FetchUsersContainer extends React.Component {
   componentDidMount() {
