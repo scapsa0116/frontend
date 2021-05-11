@@ -68,13 +68,13 @@ export const fetchCurrentUserPic = () => {
       }
     })
       .then((resp) => resp.json())
-      .then((pictures) => {
-        if (pictures.error) {
+      .then((picturesHome) => {
+        if (picturesHome.error) {
           alert("Not autorized");
         } else {
           dispatch({
             type: SUCCESUFULY_LOADED_PICTURES_HOME,
-            payload: pictures
+            payload: picturesHome
           });
         }
       });

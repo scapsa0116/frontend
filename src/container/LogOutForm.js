@@ -21,6 +21,7 @@ class LogOutForm extends React.Component {
     // });
     // // localStorage.removeItem("token");
     this.props.dispatchLogoutUser();
+    this.props.history.push("/");
   };
 
   render() {
@@ -34,7 +35,7 @@ class LogOutForm extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    logOutCurrentUser: state.users
+    logOutCurrentUser: state.currentUser
   };
 };
 

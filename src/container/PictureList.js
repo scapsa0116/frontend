@@ -29,7 +29,7 @@ class PictureList extends React.Component {
       })
       .map((picture) => {
         return (
-          <div>
+          <div key={picture.id}>
             <li key={picture.id} className='flex items-center justify-center'>
               <div className='rounded overflow-hidden border w-full lg:w-6/12 md:w-6/12 bg-white mx-3 md:mx-0 lg:mx-0 m-10'>
                 <div className='w-full flex justify-between p-3'>

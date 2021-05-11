@@ -42,8 +42,7 @@ export const newUserReducer = (state = initialState, action) => {
     case SUCCESSFUL_LOG_OUT:
       // debugger;
       return {
-        ...state,
-        currentUser: {}
+        currentUser: action.payload
       };
 
     default:

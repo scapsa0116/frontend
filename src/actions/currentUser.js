@@ -1,7 +1,6 @@
 import {
   LOADING_LOGIN_FORM,
   SUCCESSFUL_LOG_OUT,
-  NOT_AUTHENTICATED,
   SUCCESSFULLY_CREATED_USER,
   START_LOADING_USERS,
   SUCCESSFUL_LOADED_USERS,
@@ -63,7 +62,7 @@ export const fetchLogInForm = (credentials) => {
   };
 };
 
-export const logoutUser = (CurrentUser) => {
+export const logoutUser = (currentUser) => {
   return (dispatch) => {
     return fetch("http://localhost:3000/logout", {
       method: "DELETE",
@@ -71,15 +70,16 @@ export const logoutUser = (CurrentUser) => {
       headers: {
         "Content-Type": "application/json"
       },
-      body: CurrentUser
+      body: currentUser
     })
       .then((res) => res.json())
       .then((resp) => {
+        console.log(resp);
         if (resp.error) {
         } else {
           dispatch({
             type: SUCCESSFUL_LOG_OUT,
-            payload: resp
+            payload: (resp = {})
           });
         }
       })

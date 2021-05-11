@@ -8,16 +8,6 @@ class LogInForm extends React.Component {
     this.props.dispatchGetCurrentUser();
   }
 
-  // handleLoginFormChange = (event) => {
-  //   const { name, value } = event.target;
-  //   this.setState({
-  //     loginForm: {
-  //       ...this.state.loginForm,
-  //       [name]: value
-  //     }
-  //   });
-  // };
-
   handleChange = (event) => {
     this.setState({
       [event.target.name]: event.target.value
@@ -31,45 +21,9 @@ class LogInForm extends React.Component {
     const { name, email, password } = this.state;
     this.props.dispatchLoginUser({ name, email, password });
     this.props.history.push("/");
-    // .then(() => this.props.history.push("/"))
-    // .catch(() => this.setState({ error: true }));
   };
 
-  // const userInfo = this.props.loginForm;
-  // this.props.dispatchLogInCurrentUser(userInfo);
-
-  //   fetch("http://localhost:3000/login", {
-  //     method: "POST",
-  //     credentials: "include",
-  //     headers: {
-  //       "content-type": "application/json"
-  //     },
-  //     body: JSON.stringify({
-  //       user: userInfo
-  //     })
-  //   })
-  //     .then((res) => res.json())
-  //     .then((resp) => {
-  //       if (resp.error) {
-  //         alert("Invalid credentials");
-  //       } else {
-  //         this.setState({
-  //           currentUser: resp.user,
-  //           loginForm: {
-  //             name: "",
-  //             email: "",
-  //             password: ""
-  //           }
-  //         });
-  //       }
-  //     })
-  //     .catch(console.log);
-  // };
-
   render() {
-    const { currentUser } = this.props;
-    // const history = useHistory();
-    // console.log(history);
     return (
       <div className='bg-grey-lighter min-h-screen flex flex-col'>
         <div className='container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2'>

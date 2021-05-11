@@ -12,9 +12,15 @@ class GetPictures extends React.Component {
   }
 
   render() {
+    const { currentUser } = this.props;
+    console.log(currentUser);
     return (
       <div>
-        <Home pictures={this.props.pictures} currentUser={this.props} />
+        {currentUser ? (
+          <Home pictures={this.props.pictures} currentUser={this.props} />
+        ) : (
+          "loggedOut"
+        )}
       </div>
     );
   }
@@ -25,9 +31,10 @@ const mapStateToProps = (state) => {
   return {
     currentUser: state.currentUser,
     // user: state.usersList.list.find((user) => user.id == userId),
-    pictures: state.pictures.list.filter(
-      (picture) => picture.user_id === state.currentUser.id
-    )
+    pictures: state.pictures.list
+    //   .filter(
+    //   (picture) => picture.user_id === state.currentUser.id
+    // )
   };
 };
 

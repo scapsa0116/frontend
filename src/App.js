@@ -10,14 +10,16 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  NavLink,
-  Redirect
+  NavLink
 } from "react-router-dom";
 import GetPictures from "./container/GetPictures";
 import LogOutForm from "./container/LogOutForm";
 
 class App extends React.Component {
   render() {
+    // const { currentUser } = this.props;
+    // console.log(currentUser);
+
     return (
       <div>
         <Router>
@@ -31,13 +33,10 @@ class App extends React.Component {
                 />
               </NavLink>
 
-              <div className='relative hidden sm:block text-gray-500'>
-                {/* <i className="fa fa-search absolute top-0 left-0 ml-12 mt-1"></i>       */}
-              </div>
+              <div className='relative hidden sm:block text-gray-500'></div>
 
-              <div className='space-x-4'>
+              <div className='space-x-4 flex items-center'>
                 <NavLink to={"/users/:userId/pictures/new"}>
-                  {/* <button className="inline-block bg-blue-500 px-2 py-1 text-white font-semibold text-sm rounded" href="#">Pic</button> */}
                   <button className='inline-block bg-green-500 px-2 py-1 text-white font-semibold text-sm rounded'>
                     <svg
                       className='h-6 w-6'
@@ -54,8 +53,6 @@ class App extends React.Component {
                 </NavLink>
 
                 <NavLink to={"/home"}>
-                  {/* <button  className="inline-block bg-blue-500 px-2 py-1 text-white font-semibold text-sm rounded" href="#">Home</button> */}
-
                   <button className='inline-block bg-blue-500 px-2 py-1 text-white font-semibold text-sm rounded'>
                     <svg
                       className='h-6 w-6'
@@ -107,8 +104,8 @@ class App extends React.Component {
               <PicturesContainer />
             </Route>
 
-            <Route exact path='/logout'>
-              <LogOutForm />
+            <Route exact path='/logout' component={LogOutForm}>
+              {/* <LogOutForm /> */}
             </Route>
 
             <Route path='/home'>
@@ -127,9 +124,7 @@ class App extends React.Component {
               component={OnePicture}
             ></Route>
 
-            <Route exact path='/home'>
-              <GetPictures />
-            </Route>
+            <Route exact path='/home' component={GetPictures}></Route>
 
             <Route path='/login' component={LogInForm} />
 

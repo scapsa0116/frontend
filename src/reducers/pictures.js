@@ -41,7 +41,7 @@ export default function picturesReducer(state = initialState, action) {
     case SUCCESSFUL_CREATED_PICTURE:
       return {
         ...state,
-        list: action.payload
+        list: state.list.concat(action.payload)
       };
     default:
       return state;
